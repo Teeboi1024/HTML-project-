@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #clock {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        #hour, #minute, #second {
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background: #333;
+            top: 50%;
+            transform-origin: 100%;
+            transform: translateY(-50%);
+        }
+
+        #hour {
+            background: #333;
+            transform: translateY(-50%) rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+    <div id="clock">
+        <div id="hour"></div>
+        <div id="minute"></div>
+        <div id="second"></div>
+    </div>
+    <script>
+        function updateClock() {
+            const clock = document.getElementById('clock');
+            const hourHand = document.getElementById('hour');
+            const minuteHand = document.getElementById('minute');
+            const secondHand = document.getElementById('second');
+
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const hourDeg = (360 / 12) * hours + (360 / 12) * (minutes / 60);
+            const minuteDeg = (360 / 60) * minutes;
+            const secondDeg = (360 / 60) * seconds;
+
+            hourHand.style.transform = `translateY(-50%) rotate(${hourDeg}deg)`;
+            minuteHand.style.transform = `translateY(-50%) rotate(${minuteDeg}deg)`;
+            secondHand.style.transform = `translateY(-50%) rotate(${secondDeg}deg)`;
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
